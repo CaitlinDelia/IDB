@@ -135,7 +135,7 @@ def scrapeSkinsItems():
 				skin_cost = None
 			quality = data['quality']['name']
 
-			skin = Skins(h, skin_name, skin_cost, quality, hero_id, event_id)
+			skin = Skin(h, skin_name, skin_cost, quality, hero_id, event_id)
 			db.session.add(skin)
 			db.session.commit()
 		else:
@@ -143,7 +143,7 @@ def scrapeSkinsItems():
 				item = reward_type
 				item_name = data['name']
 				item_type = data['type']['name']
-				item = Items(h, item_name, item_type, event_id)
+				item = Item(h, item_name, item_type, hero_id, event_id)
 				db.session.add(item)
 				db.session.commit()
 
