@@ -11,7 +11,8 @@ import psycopg2
 baseurl = 'https://overwatch-api.net/api/v1'
 context = ssl._create_unverified_context()
 
-#db.drop_all()
+db.reflect()
+db.drop_all()
 db.create_all()
 
 def scrapeHeroes():
@@ -74,11 +75,16 @@ def scrapeAchievements():
 			reward_type = data['reward']['type']['name']
 			reward_quality = data['reward']['quality']['name']
 
+			f_key = None
+			if(data['hero'] is not None):
+				f_key = data['hero']['id']
+
+
 		# 
 
 	#all the url, info to create each json
 		# print(str(achievement_id) + " "+ name + "\n"+ description)
-			achieve = Achievement(achievement_id, name, description, reward, reward_type, reward_quality)
+			achieve = Achievement(achievement_id, name, description, reward, reward_type, reward_quality,f_key)
 			db.session.add(achieve)
 			db.session.commit()
 
@@ -171,10 +177,10 @@ def scrapeTopPlayers():
 
 
 def main():
-	#scrapeHeroes()
+	scrapeHeroes()
 	scrapeAchievements()
 	#scrapeEvents()
 	#scrapeSkinsItems()
-	#scrapeTopPlayers()
+	# scrapeTopPlayers()
 
 if __name__ == "__main__": main()
